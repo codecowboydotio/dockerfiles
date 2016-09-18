@@ -29,7 +29,9 @@ ADD . $TMP
 # Unzip the software to /opt/eap7
 #
 #########################################
-RUN yum -y update ; yum clean all
+# Removed update all as is bad practice in a container.
+# If you want to update - use the latest image from your OS vendor
+#RUN yum -y update ; yum clean all
 RUN yum -y install unzip java-1.8.0-openjdk java-1.8.0-openjdk-devel; yum clean all
 RUN unzip $TMP/$EAP7ZIP -d $EAP_BASE
 
