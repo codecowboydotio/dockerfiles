@@ -10,6 +10,7 @@ ENV EAP_BASE /opt/eap7
 ENV EAP7ZIP jboss-eap-7.0.0.zip
 ENV EAP7 jboss-eap-7.0
 ENV TMP $HOME/tmp
+ENV JENKINS_FILE jenkins.war
 
 #########################################
 #
@@ -34,6 +35,8 @@ ADD . $TMP
 #RUN yum -y update ; yum clean all
 RUN yum -y install unzip java-1.8.0-openjdk java-1.8.0-openjdk-devel
 RUN unzip $TMP/$EAP7ZIP -d $EAP_BASE
+RUN cp $TMP/$JENKINS_FILE /opt/eap7/jboss-eap-7.0/standalone/deployments
+RUN touch /opt/eap7/jboss-eap-7.0/standalone/deployments/jenkins.war.dodeploy
 
 
 #########################################

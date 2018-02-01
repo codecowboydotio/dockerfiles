@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/rhel7.2
+FROM registry.access.redhat.com/rhel7.3
 
 ENV foo /bar
 ENV destdir /dest
