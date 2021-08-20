@@ -1,13 +1,15 @@
-FROM docker.io/library/ubuntu
+FROM registry.fedoraproject.org/fedora
 
 MAINTAINER "@svk"
 
-LABEL description="HTTPD Container"
-ENV ports 80 443
-RUN DEBIAN_FRONTEND="noninteractive" apt-get update
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install apache2 git -y
-RUN git clone  https://github.com/platzhersh/pacman-canvas /var/www/html/pacman
-RUN mv /var/www/html/pacman/* /var/www/html
-CMD ["-D", "FOREGROUND"]
-ENTRYPOINT ["/usr/sbin/httpd"]
-EXPOSE 80 443
+LABEL description="SWAPI json server Container"
+RUN dnf -y install git npm nodejs procps-ng
+RUN git clone  https://github.com/codecowboydotio/swapi-json-server
+WORKDIR /swapi-json-server
+RUN npm install
+RUN useradd -ms /bin/bash nodeuser
+RUN chown -R nodeuser /swapi-json-server
+USER nodeuser
+CMD ["/usr/bin/npm", "start"]
+EXPOSE 3000
+
